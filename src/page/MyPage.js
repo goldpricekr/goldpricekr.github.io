@@ -11,20 +11,27 @@ const UserInfo = styled.p`
   font-size: 20px;
 `;
 
-const PointInfo = styled.p`
-  font-size: 18px;
+const PointInfo = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0;
 `;
 
-const CartList = styled.ul`
-list-style: none;
-display: flex;
-flex-wrap: wrap;
-padding: 0;
+const GoldBarImage = styled.img`
+  width: 100px;
 `;
 
-// const CartItem = styled.li`
-//   font-size: 16px;
-// `;
+const GoldPoint = styled.p`
+  margin-top: 10px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 24px;
+`;
+
+const GoldText = styled.p`
+  margin-top: 10px;
+  width: 100%;
+`;
 
 const CheckInButton = styled.button`
   background-color: #007bff;
@@ -34,36 +41,63 @@ const CheckInButton = styled.button`
   font-size: 16px;
   cursor: pointer;
   border-radius: 10px;
+  margin: 10px 0;
+`;
+
+const CartList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
 `;
 
 const ProductItem = styled.li`
-width: 250px;
-margin: 10px;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
+  width: 250px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 `;
 
 const ProductImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  border-radius: 10px;
 `;
 
 const ProductTitle = styled.h3`
   margin: 10px 0;
+  line-height: 1.2;
+  border: solid 1px gainsboro;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
 `;
 
 const ProductPrice = styled.p`
-  font-weight: bold;
+font-weight: bold;
+text-align: left;
+color: deeppink;
 `;
 
 const PriceChangeBadge = styled.span`
-  background: deeppink;
-  color: pink;
-  padding: 0 4px;
-  border-radius: 4px;
-  margin-right: 8px;
+background: deeppink;
+color: pink;
+padding: 0 4px;
+border-radius: 4px;
+margin-right: 8px;
 `;
+
+const MoreInfo = styled.button`
+background: #007bff;
+border: none;
+padding: 10px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+margin-top: 20px;
+font-size: 16px;
+color: white;
+    `;
 
 function MyPage() {
   const [user, setUser] = useState(null);
@@ -159,7 +193,7 @@ function MyPage() {
       }, 0);
 
       const formattedAmount = detailPoint.toLocaleString();
-      return `${formattedAmount}p`;
+      return `${formattedAmount}mg`;
     }
     return '';
   };
@@ -203,9 +237,26 @@ function MyPage() {
     <StyledMyPage>
       {user ? (
         <>
-          <UserInfo>반갑습니다! {user.email}</UserInfo>
           {user.phone_num > 8 ? (
-            <div>기프티콘 수령할 번호: {user.phone_num} <span>번호변경문의</span></div>
+            <div>
+              <h3>
+                <p>안녕하세요!</p>
+                <p>
+                  <UserInfo>{user.email}</UserInfo>
+                </p>
+              </h3>
+              <div style={{ marginTop: '20px' }}>
+                <p>
+                  등록된 전화번호는{' '}
+                  <span style={{ fontWeight: 'bold' }}>{user.phone_num}</span>입니다.
+                </p>
+                <p>
+                  <a href='' target='_blank'>
+                    번호변경문의
+                  </a>
+                </p>
+              </div>
+            </div>
           ) : (
             <form onSubmit={submitPhoneNum}>
               <p>기프티콘 수령할 번호</p>
@@ -219,24 +270,29 @@ function MyPage() {
               <button type='submit'>제출</button>
             </form>
           )}
-          <PointInfo>내 포인트: {userPointFormatted()}</PointInfo>
-          <CheckInButton onClick={checkIn}>쿠팡 특가 확인하고 20p 받기</CheckInButton>
+          <PointInfo>
+          <GoldText><GoldBarImage src='img/gold_point.png' /></GoldText>
+            <GoldPoint>{userPointFormatted()}</GoldPoint>
+            <GoldText>모은 골드바</GoldText>
+          </PointInfo>
+          <CheckInButton onClick={checkIn}>쿠팡 특가 확인하고 금1mg 받기</CheckInButton>
 
           {productList.length > 0 ? (
-            <div>
-              <p>내 장바구니 목록</p>
+            <div style={{marginTop: '30px'}}>
+              <h4>내 장바구니 목록</h4>
               <CartList>
                 {productList.map((product) => {
                   let price;
                   let price_percent;
-                  
+
                   try {
                     const priceData = product.price;
                     // 문자열을 JSON으로 파싱
                     const jsonString = priceData.replace(/'/g, '"');
                     const price_json = JSON.parse(jsonString);
                     price = price_json.price_list[price_json.price_list.length - 1];
-                    price_percent = product.price_percent; // 추가
+                    const maxPrice = price_json.price_list.reduce((max, item) => (item > max ? item : max), price_json.price_list[0]);
+                    price_percent = (((maxPrice - price) / maxPrice) * 100).toFixed(1);
                   } catch (error) {
                     price = product.price;
                   }
@@ -251,9 +307,19 @@ function MyPage() {
                           )}
                           {price.toLocaleString()}원
                         </ProductPrice>
+                        <MoreInfo>더 알아보기</MoreInfo>
                       </Link>
                       <form onSubmit={(e) => Delete_cart(e, product.product_id)}>
-                        <button type='submit'>X</button>
+                        <button type='submit' style={{
+                        background: 'deeppink',
+                        color: '#fff',
+                        border: 'none',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        width: '100%',
+                        fontSize: '16px',
+                        marginTop: '10px'}}>장바구니 삭제</button>
                       </form>
                     </ProductItem>
                   );

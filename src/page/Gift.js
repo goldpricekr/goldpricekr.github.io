@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
 
 // 스타일드 컴포넌트 정의
 const ProductList = styled.ul`
@@ -21,31 +20,33 @@ const ProductItem = styled.li`
 const ProductImage = styled.img`
   max-width: 100%;
   height: auto;
+  border-radius: 10px;
 `;
 
 const ProductTitle = styled.h3`
-  font-size: 1.2em;
-  margin: 10px 0;
+margin: 10px 0;
+line-height: 1.2;
+border: solid 1px gainsboro;
+padding: 10px;
+border-radius: 10px;
+text-align: left;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 1.1em;
-  color: #007acc;
-`;
-
-const PriceChangeBadge = styled.span`
-  color: red;
-  font-weight: bold;
-  margin-right: 4px;
+font-weight: bold;
+text-align: center;
+color: deeppink;
 `;
 
 const AddToCartButton = styled.button`
-  background: #007acc;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+background: deeppink;
+color: #fff;
+border: none;
+padding: 5px 10px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+margin-top: 10px;
 `;
 
 function Gift() {

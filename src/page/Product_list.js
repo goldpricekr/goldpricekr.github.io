@@ -21,31 +21,54 @@ const ProductItem = styled.li`
 const ProductImage = styled.img`
   max-width: 100%;
   height: auto;
+  border-radius: 10px;
 `;
 
 const ProductTitle = styled.h3`
-  font-size: 1.2em;
-  margin: 10px 0;
+    margin: 10px 0;
+    line-height: 1.2;
+    border: solid 1px gainsboro;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 1.1em;
-  color: #007acc;
+  font-weight: bold;
+  text-align: left;
+  color: deeppink;
 `;
 
 const PriceChangeBadge = styled.span`
-  color: red;
-  font-weight: bold;
-  margin-right: 4px;
+  background: deeppink;
+  color: pink;
+  padding: 0 4px;
+  border-radius: 4px;
+  margin-right: 8px;
 `;
 
+const MoreInfo = styled.button`
+background: #007bff;
+border: none;
+padding: 10px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+margin-top: 20px;
+font-size: 16px;
+color: white;
+    `;
+
 const AddToCartButton = styled.button`
-  background: #007acc;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+background: deeppink;
+color: #fff;
+border: none;
+padding: 10px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+margin-top: 10px;
+font-size: 16px;
 `;
 
 function Product_list() {
@@ -124,6 +147,7 @@ function Product_list() {
                     <PriceChangeBadge>-{price_percent}%</PriceChangeBadge>
                     {price.toLocaleString()}원
                   </ProductPrice>
+                  <MoreInfo>더 알아보기</MoreInfo>
                 </Link>
                 <AddToCartButton onClick={() => addCart(product.product_id)}>
                   장바구니 담기

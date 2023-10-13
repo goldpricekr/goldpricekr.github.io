@@ -18,7 +18,7 @@ const UserInfo = styled.div`
 `;
 
 const LogoutButton = styled.button`
-  background-color: #ff5722;
+  background-color: darkgoldenrod;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -26,6 +26,8 @@ const LogoutButton = styled.button`
   font-size: 16px;
   margin-bottom: 10px;
   border-radius: 5px;
+  width: 150px;
+  text-align: center;
 `;
 
 const SocialKakao = () => {
@@ -95,18 +97,32 @@ const SocialKakao = () => {
     <StyledSocialKakao>
       {userInfo ? (
         <>
-          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-          {userInfo && <UserInfo>{userInfo.user_email}</UserInfo>}
-          <Link to="/mypage" style={{ textDecoration: 'none' }}>마이페이지</Link>
-        </>
-      ) : (
-        <KakaoLogin
-          token={kakaoClientId}
-          onSuccess={kakaoOnSuccess}
-          onFail={kakaoOnFailure}
-        />
-      )}
-    </StyledSocialKakao>
+          <Link to="/mypage" style={{
+            textDecoration: 'none',
+          width: '150px',
+          textAlign: 'center',
+          background: '#d8c777',
+          padding: '10px 0',
+          cursor: 'pointer',
+          fontSize: '16px',
+          marginBottom: '10px',
+          borderRadius: '5px',
+          color: '#333'
+    }}>마이페이지</Link>
+      <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+      {userInfo && <UserInfo>{userInfo.user_email}</UserInfo>}
+    </>
+  ) : (
+    <div id='kakao_login'>
+      <KakaoLogin
+        token={kakaoClientId}
+        onSuccess={kakaoOnSuccess}
+        onFail={kakaoOnFailure}
+      />
+    </div>
+  )
+}
+    </StyledSocialKakao >
   );
 }
 

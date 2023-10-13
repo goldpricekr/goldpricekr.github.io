@@ -5,15 +5,24 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 20px;
 `;
 
-const Header = styled.div`
+const Header1 = styled.h2`
   font-size: 24px;
   font-weight: bold;
 `;
 
+const Header2 = styled.h1`
+  font-size: 36px;
+  font-weight: bold;
+  margin: 10px;
+`;
+
 const Table = styled.table`
+  margin: 10px;
   width: 100%;
+  max-width: 600px;
   border-collapse: collapse;
 `;
 
@@ -54,7 +63,9 @@ function Home() {
 
   return (
     <Wrapper>
-      <Header>금시세케이알 소개입니다</Header>
+      <Header1>금에 관한 모든 것</Header1>
+      <Header2>금시세케이알</Header2>
+
       <Table className="main_market_table">
         <thead>
           <tr>
@@ -65,7 +76,7 @@ function Home() {
         </thead>
         <tbody className="default">
           <tr>
-            <th>순금</th>
+            <th style={{borderRadius: '0'}}>순금</th>
             <Td id="spure">{data && data.spure.toLocaleString() + '원'}</Td>
             <Td id="ppure">{data && data.ppure.toLocaleString() + '원'}</Td>
           </tr>

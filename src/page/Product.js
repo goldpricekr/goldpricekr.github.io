@@ -6,23 +6,32 @@ import Chart from 'chart.js/auto';
 // 스타일드 컴포넌트 정의
 const ProductContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin: 20px;
 `;
 
 const ProductInfo = styled.div`
-  flex: 1;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
+  max-width: 600px;
+  margin: auto;
 `;
 
 const ProductImage = styled.img`
-  max-width: 100%;
+  width: 100%;
   border-radius: 8px;
+  max-width: 640px;
+  margin: auto;
 `;
 
 const ProductTitle = styled.h2`
-  margin: 10px 0;
+    margin: 10px 0;
+    line-height: 1.2;
+    border: solid 1px gainsboro;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
 `;
 
 const ProductPrice = styled.h3`
@@ -39,23 +48,38 @@ const PriceChangeBadge = styled.span`
   margin-right: 8px;
 `;
 
+const CoupangBtn = styled.button`
+    background: #007bff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+`;
+
 const CoupangLink = styled.a`
-  display: block;
-  color: #007bff;
-  text-decoration: none;
-  margin-top: 10px;
-  font-weight: bold;
+  color: #fff;
 `;
 
 const AddToCartButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
-  margin-top: 10px;
+background: deeppink;
+color: #fff;
+border: none;
+padding: 10px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+margin-top: 10px;
+font-size: 16px;
+`;
+
+const Coupang_text = styled.p`
+    margin-top: 20px;
+    color: gray;
+    font-size: 14px;
+    text-align: center;
 `;
 
 function Product() {
@@ -88,10 +112,7 @@ function Product() {
                     const productData = await response.json();
                     const productItem = productData[0];
 
-                    // 기존 차트 파괴
-                    if (chartRef.current) {
-                        chartRef.current.destroy();
-                    }
+                    // 이전 차트 파괴
                     if (productItem) {
                         let price;
                         let price_json;
@@ -136,25 +157,12 @@ function Product() {
         fetchProduct();
     }, [apiBaseUrl, product_id]);
 
-    const addCart = async (product_id) => {
-        const jwtToken = localStorage.getItem('jwt_token');
-        try {
-            const response = await fetch(
-                `https://minvis.eu.pythonanywhere.com/add_cart?client_jwt_token=${jwtToken}&product_id=${product_id}`,
-                { method: 'GET' }
-            );
-            if (response.ok) {
-                const result = await response.json();
-                alert(result.message);
-            } else {
-                alert('상품 추가 중 오류가 발생했습니다.');
-            }
-        } catch (error) {
-            console.error('오류 발생:', error);
-        }
-    };
-
     useEffect(() => {
+        // 이전 차트 파괴 코드 추가
+        if (chartRef.current) {
+            chartRef.current.destroy();
+        }
+
         if (canvasRef.current) {
             const chart_info = product.price_json;
             const ctx = canvasRef.current;
@@ -220,7 +228,23 @@ function Product() {
             chartRef.current = new Chart(ctx, config);
         }
     }, [product.price_json]);
-
+    const addCart = async (product_id) => {
+        const jwtToken = localStorage.getItem('jwt_token');
+        try {
+          const response = await fetch(
+            `${apiBaseUrl}/add_cart?client_jwt_token=${jwtToken}&product_id=${product_id}`,
+            { method: 'GET' }
+          );
+          if (response.ok) {
+            const result = await response.json();
+            alert(result.message);
+          } else {
+            alert('상품 추가 중 오류가 발생했습니다.');
+          }
+        } catch (error) {
+          console.error('오류 발생:', error);
+        }
+      };
     return (
         <ProductContainer>
           <ProductImage src={product.img_src} alt={product.title} />
@@ -230,13 +254,16 @@ function Product() {
               {product.price_percent && (
                 <PriceChangeBadge>-{product.price_percent}%</PriceChangeBadge>
               )}
-              <span>{product.price.toLocaleString()}원</span>
+              <span style={{color: 'deeppink'}}>{product.price.toLocaleString()}원</span>
             </ProductPrice>
             <canvas ref={canvasRef} id="priceChart"></canvas>
-            <CoupangLink href={product.coupang_url}>쿠팡에서 보기</CoupangLink>
+            <CoupangBtn>
+                <CoupangLink href={product.coupang_url}>쿠팡에서 보기</CoupangLink>
+            </CoupangBtn>
             <AddToCartButton onClick={() => addCart(product.product_id)}>
               장바구니 담기
             </AddToCartButton>
+            <Coupang_text>쿠팡파트너스 활동의 일환으로 일정액의 수수료를 지급 받을 수 있습니다.</Coupang_text>
           </ProductInfo>
         </ProductContainer>
       );

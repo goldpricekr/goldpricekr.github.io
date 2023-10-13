@@ -27,7 +27,6 @@ const Logo = styled.h3`
 const MenuButton = styled.button`
   background-color: transparent;
   border: none;
-  color: white;
   font-size: 24px;
   cursor: pointer;
 `;
@@ -44,17 +43,16 @@ const Menu = styled.div`
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  padding: 60px 20px;
+  max-width: 300px;
 `;
 
 const CloseButton = styled.button`
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
   background-color: transparent;
   border: none;
-  color: white;
   font-size: 24px;
   cursor: pointer;
 `;
@@ -71,18 +69,21 @@ function Header() {
   };
 
   return (
-      <HeaderWrapper>
+      <HeaderWrapper className='Header'>
         <InnerWrapper>
-          <Logo><Link to="/">금시세케이알</Link></Logo>
+          <Logo><Link to="/"><img className='Logo' src="img/logo.jpg" alt='logo'/></Link></Logo>
           <MenuButton onClick={toggleMenu}>=</MenuButton>
         </InnerWrapper>
         <Menu open={menuOpen}>
           <CloseButton onClick={closeMenu}>X</CloseButton>
+          <Link to="/"><img className='Logo' src='img/logo.jpg' /></Link>
+          <ul>
+            <li><Link to="/product_list?karat=24">순금</Link></li>
+            <li><Link to="/product_list?karat=18">18K</Link></li>
+            <li><Link to="/product_list?karat=14">14K</Link></li>
+            <li><Link to="/gift">기프티콘</Link></li>
+          </ul>
           <Login />
-          <Link to="/product_list?karat=24">순금</Link>
-          <Link to="/product_list?karat=18">18K</Link>
-          <Link to="/product_list?karat=14">14K</Link>
-          <Link to="/gift">기프티콘</Link>
         </Menu>
       </HeaderWrapper>
   );

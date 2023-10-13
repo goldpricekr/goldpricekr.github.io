@@ -26,8 +26,8 @@ const ContactItem = styled.li`
 
 function Footer() {
   return (
-    <FooterWrapper>
-      <FooterHeading>금시세케이알</FooterHeading>
+    <FooterWrapper className='Footer'>
+      <FooterHeading><img className='Logo' src='img/logo.jpg' /></FooterHeading>
       <ContactList>
         <ContactItem>제휴문의: goldpricekr@gmail.com</ContactItem>
       </ContactList>

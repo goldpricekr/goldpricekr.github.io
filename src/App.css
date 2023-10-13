@@ -1,3 +1,92 @@
-* {margin: 0;}
-a {text-decoration: none;}
-body {margin-top: 60px;}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    line-height: 1;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background: #FFEEEE;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #DDEFBB, #FFEEEE);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #DDEFBB, #FFEEEE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#root {
+    margin-top: 100px;
+}
+
+canvas {max-width: 100%;}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 6px 15px;
+}
+
+th {
+    background: #42444e;
+    color: #fff;
+    text-align: left;
+}
+
+tr:first-child th:first-child {
+    border-top-left-radius: 6px;
+}
+
+tr:first-child th:last-child {
+    border-top-right-radius: 6px;
+}
+
+td {
+    border-right: 1px solid #c6c9cc;
+    border-bottom: 1px solid #c6c9cc;
+}
+
+td:first-child {
+    border-left: 1px solid #c6c9cc;
+}
+
+tr:nth-child(even) td {
+    background: #eaeaed;
+}
+
+tr:nth-child(odd) td {
+    background: whitesmoke;
+}
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+}
+
+tr:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+}
+
+/* Header, Footer */
+.Logo {height: 30px;}
+#kakao_login > button {font-weight: bold; border-radius: 15px !important;}
+.Header > div > a {
+    text-align: right;
+}
+.Header > div > ul {
+    padding: 0;
+    text-align: right;
+    margin-top: 20px;
+}
+.Header > div > ul > li {
+    list-style: none;
+    font-size: 16px;
+    margin: 20px 0;
+}
+.Header * {color: #d8c777;}
+.Footer * {color: #d8c777;}
