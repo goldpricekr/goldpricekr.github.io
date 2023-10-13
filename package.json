@@ -32,7 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "push-dir --dir=build --branch=gh-pages --cleanup"
+    "deploy": "gh-pages -d build"
   },
   "homepage": "https://goldpricekr.github.io",
   "eslintConfig": {
