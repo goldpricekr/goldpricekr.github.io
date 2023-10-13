@@ -58,21 +58,30 @@ function Product_list() {
 
     useEffect(() => {
         const fetchData = async () => {
+          let retries = 0;
+          const maxRetries = 5; // 최대 재시도 횟수 설정
+          while (retries < maxRetries) {
             try {
-                const response = await fetch(`https://minvis.eu.pythonanywhere.com/show_product?karat=${karat}`);
-                if (response.ok) {
-                    const productData = await response.json();
-                    setProductData(productData);
-                } else {
-                    alert('잠시 오류가 발생했습니다.');
-                }
+              const response = await fetch(
+                `https://minvis.eu.pythonanywhere.com/show_product?karat=${karat}`
+              );
+              if (response.ok) {
+                const productData = await response.json();
+                setProductData(productData);
+                break;
+              } else {
+                console.error('오류 발생');
+              }
             } catch (error) {
-                console.error('오류 발생:', error);
+              console.error('오류 발생:', error);
             }
+            retries += 1;
+            // 일시 중지를 통해 재시도 간의 지연을 추가할 수 있습니다.
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
         };
-
-        fetchData();
-    }, [karat]);
+        fetchData(); // fetchData 함수를 호출하여 데이터를 가져옵니다.
+      }, [karat]);
 
     // 장바구니에 상품 추가하는 함수
     const addCart = async (product_id) => {
