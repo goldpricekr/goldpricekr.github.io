@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import KakaoLogin from "react-kakao-login";
 import styled from 'styled-components';
 import jwt_decode from 'jwt-decode'; // jwt-decode 라이브러리 추가
+import { Link } from 'react-router-dom'; // Link 추가
 
 const StyledSocialKakao = styled.div`
   display: flex;
@@ -25,13 +26,6 @@ const LogoutButton = styled.button`
   font-size: 16px;
   margin-bottom: 10px;
   border-radius: 5px;
-`;
-
-const MyPageLink = styled.a`
-  font-size: 16px;
-  text-decoration: none;
-  color: #007bff;
-  margin-bottom: 10px;
 `;
 
 const SocialKakao = () => {
@@ -103,7 +97,7 @@ const SocialKakao = () => {
         <>
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
           {userInfo && <UserInfo>{userInfo.user_email}</UserInfo>}
-          <MyPageLink href="/mypage">마이페이지</MyPageLink>
+          <Link to="/mypage" style={{ textDecoration: 'none' }}>마이페이지</Link>
         </>
       ) : (
         <KakaoLogin

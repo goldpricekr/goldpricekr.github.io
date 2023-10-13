@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 // 스타일드 컴포넌트 정의
 const ProductList = styled.ul`
@@ -65,11 +65,9 @@ function Product_list() {
                     setProductData(productData);
                 } else {
                     alert('잠시 오류가 발생했습니다.');
-                    window.location.reload();
                 }
             } catch (error) {
                 console.error('오류 발생:', error);
-                window.location.reload();
             }
         };
 
@@ -99,33 +97,33 @@ function Product_list() {
 
     return (
         <ProductList>
-            {productData.map((product) => {
-                const priceData = product.price;
-                // 문자열을 JSON으로 파싱
-                const jsonString = priceData.replace(/'/g, '"');
-                const price_json = JSON.parse(jsonString);
-                const priceList = price_json.price_list;
-                const maxPrice = priceList.reduce((max, item) => (item > max ? item : max), priceList[0]);
-                const price = priceList[priceList.length - 1];
-                const price_percent = (((maxPrice - price) / maxPrice) * 100).toFixed(1);
-                return (
-                    <ProductItem key={product.product_id}>
-                        <a href={`/product?id=${product.product_id}`}>
-                            <ProductImage src={product.img_src} alt={product.title} />
-                            <ProductTitle>{product.title}</ProductTitle>
-                            <ProductPrice>
-                                <PriceChangeBadge>-{price_percent}%</PriceChangeBadge>
-                                {price.toLocaleString()}원
-                            </ProductPrice>
-                        </a>
-                        <AddToCartButton onClick={() => addCart(product.product_id)}>
-                            장바구니 담기
-                        </AddToCartButton>
-                    </ProductItem>
-                );
-            })}
+          {productData.map((product) => {
+            const priceData = product.price;
+            // 문자열을 JSON으로 파싱
+            const jsonString = priceData.replace(/'/g, '"');
+            const price_json = JSON.parse(jsonString);
+            const priceList = price_json.price_list;
+            const maxPrice = priceList.reduce((max, item) => (item > max ? item : max), priceList[0]);
+            const price = priceList[priceList.length - 1];
+            const price_percent = (((maxPrice - price) / maxPrice) * 100).toFixed(1);
+            return (
+              <ProductItem key={product.product_id}>
+                <Link to={`/product?id=${product.product_id}`} style={{ textDecoration: 'none' }}> {/* Link로 변경 */}
+                  <ProductImage src={product.img_src} alt={product.title} />
+                  <ProductTitle>{product.title}</ProductTitle>
+                  <ProductPrice>
+                    <PriceChangeBadge>-{price_percent}%</PriceChangeBadge>
+                    {price.toLocaleString()}원
+                  </ProductPrice>
+                </Link>
+                <AddToCartButton onClick={() => addCart(product.product_id)}>
+                  장바구니 담기
+                </AddToCartButton>
+              </ProductItem>
+            );
+          })}
         </ProductList>
-    );
+      );
 }
 
 export default Product_list;

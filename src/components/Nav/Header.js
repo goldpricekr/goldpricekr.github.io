@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'; // BrowserRouter 제거
 import Login from './Login';
 
 const HeaderWrapper = styled.header`
@@ -70,20 +71,20 @@ function Header() {
   };
 
   return (
-    <HeaderWrapper>
-      <InnerWrapper>
-        <Logo><a href="/">금시세케이알</a></Logo>
-        <MenuButton onClick={toggleMenu}>=</MenuButton>
-      </InnerWrapper>
-      <Menu open={menuOpen}>
-        <CloseButton onClick={closeMenu}>X</CloseButton>
-        <Login />
-        <a href="/product_list?karat=24">순금</a>
-        <a href="/product_list?karat=18">18K</a>
-        <a href="/product_list?karat=14">14K</a>
-        <a href="/gift">기프티콘</a>
-      </Menu>
-    </HeaderWrapper>
+      <HeaderWrapper>
+        <InnerWrapper>
+          <Logo><Link to="/">금시세케이알</Link></Logo>
+          <MenuButton onClick={toggleMenu}>=</MenuButton>
+        </InnerWrapper>
+        <Menu open={menuOpen}>
+          <CloseButton onClick={closeMenu}>X</CloseButton>
+          <Login />
+          <Link to="/product_list?karat=24">순금</Link>
+          <Link to="/product_list?karat=18">18K</Link>
+          <Link to="/product_list?karat=14">14K</Link>
+          <Link to="/gift">기프티콘</Link>
+        </Menu>
+      </HeaderWrapper>
   );
 }
 

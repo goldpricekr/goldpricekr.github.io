@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const StyledMyPage = styled.div`
   text-align: center;
@@ -116,7 +117,6 @@ function MyPage() {
 
   const handleRequestError = (response) => {
     console.error('서버 요청 실패:', response.status, response.statusText);
-    window.location.reload();
   };
 
   const redirectToHomePage = () => {
@@ -188,7 +188,6 @@ function MyPage() {
   const phone_resCheckInResponse = (phone_res) => {
     if ('okay' in phone_res) {
       alert('번호입력에 성공했습니다!');
-      window.location.reload();
     } else {
       alert('잘못 입력하셨습니다.');
     }
@@ -197,7 +196,7 @@ function MyPage() {
   const Delete_cart = async (e, product_id) => {
     e.preventDefault();
     await fetch(`${apiBaseUrl}/delete_cart?client_jwt_token=${jwtToken}&product_id=${product_id}`);
-    window.location.reload();
+    alert('장바구니 상품이 제거되었습니다.');
   }
 
   return (
@@ -243,7 +242,7 @@ function MyPage() {
                   }
                   return (
                     <ProductItem key={product.product_id}>
-                      <a href={`/product?id=${product.product_id}`}>
+                      <Link to={`/product?id=${product.product_id}`} style={{ textDecoration: 'none' }}>
                         <ProductImage src={product.img_src} alt={product.title} />
                         <ProductTitle>{product.title}</ProductTitle>
                         <ProductPrice>
@@ -252,7 +251,7 @@ function MyPage() {
                           )}
                           {price.toLocaleString()}원
                         </ProductPrice>
-                      </a>
+                      </Link>
                       <form onSubmit={(e) => Delete_cart(e, product.product_id)}>
                         <button type='submit'>X</button>
                       </form>

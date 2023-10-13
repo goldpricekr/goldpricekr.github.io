@@ -22,14 +22,18 @@
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "gh-pages": "^6.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://goldpricekr.github.io/",
+  "homepage": "https://goldpricekr.github.io",
   "eslintConfig": {
     "extends": [
       "react-app",
