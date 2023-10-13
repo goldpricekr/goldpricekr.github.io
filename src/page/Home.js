@@ -54,7 +54,7 @@ function Home() {
 
   return (
     <Wrapper>
-      <Header>금시세케이알 소개</Header>
+      <Header>금시세케이알 소개입니다</Header>
       <Table className="main_market_table">
         <thead>
           <tr>
